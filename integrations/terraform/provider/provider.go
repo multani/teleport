@@ -518,6 +518,7 @@ func (p *Provider) GetDataSources(_ context.Context) (map[string]tfsdk.DataSourc
 		"teleport_provision_token":            dataSourceTeleportProvisionTokenType{},
 		"teleport_oidc_connector":             dataSourceTeleportOIDCConnectorType{},
 		"teleport_role":                       dataSourceTeleportRoleType{},
+		"teleport_kube":                       dataSourceTeleportKubeType{},
 		"teleport_saml_connector":             dataSourceTeleportSAMLConnectorType{},
 		"teleport_session_recording_config":   dataSourceTeleportSessionRecordingConfigType{},
 		"teleport_trusted_cluster":            dataSourceTeleportTrustedClusterType{},
