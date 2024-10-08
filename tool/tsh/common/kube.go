@@ -551,6 +551,39 @@ type kubeCredentialsCommand struct {
 	teleportCluster string
 }
 
+type KubeCredentialsCommand struct {
+	kube kubeCredentialsCommand
+
+	KubeCluster     string
+	TeleportCluster string
+}
+
+func NewKubeCredentialsCommand(kube string, teleport string) *KubeCredentialsCommand {
+	k := kubeCredentialsCommand{
+		kubeCluster:     kube,
+		teleportCluster: teleport,
+	}
+
+	this := KubeCredentialsCommand{
+		kube:            k,
+		KubeCluster:     kube,
+		TeleportCluster: teleport,
+	}
+	return &this
+}
+
+func (c *KubeCredentialsCommand) CheckLocalProxyRequirement(profile *profile.Profile) error {
+	return c.kube.checkLocalProxyRequirement(profile)
+}
+
+func (c *KubeCredentialsCommand) WriteByteResponse(output io.Writer, kubeTLSCert, keyPEM []byte, expiry time.Time) error {
+	return c.kube.writeByteResponse(output, kubeTLSCert, keyPEM, expiry)
+}
+
+func (c *KubeCredentialsCommand) IssueCert(cf *CLIConf) error {
+	return c.kube.issueCert(cf)
+}
+
 func newKubeCredentialsCommand(parent *kingpin.CmdClause) *kubeCredentialsCommand {
 	c := &kubeCredentialsCommand{
 		// This command is always hidden. It's called from the kubeconfig that
